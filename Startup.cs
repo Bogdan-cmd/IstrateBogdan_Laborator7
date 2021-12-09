@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using IstrateBogdan_Laborator2.Data;
 using IstrateBogdan_Laborator2.Hubs;
+using Microsoft.AspNetCore.Identity;
 
 namespace IstrateBogdan_Laborator2
 {
@@ -28,9 +29,32 @@ namespace IstrateBogdan_Laborator2
         {
             services.AddControllersWithViews();
             services.AddDbContext<LibraryContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSignalR();
+            services.AddRazorPages();
+
+            services.Configure<IdentityOptions>(options => {
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.AllowedForNewUsers = true;
+            });
+            services.AddAuthorization(opts => {
+
+                opts.AddPolicy("SalesManager", policy => {
+                    policy.RequireRole("Manager");
+                    policy.RequireClaim("Department", "Sales");
+                });
+            });
+            services.ConfigureApplicationCookie(opts =>
+            {
+                opts.AccessDeniedPath = "/Identity/Account/AccessDenied";
+
+            });
         }
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -8,6 +8,7 @@
         <th>Issuer</th>
         <th>Type</th>
         <th>Value</th>
+        <th>Delete</th>
     </tr>
     @foreach (var claim in Model.OrderBy(x => x.Type))
     {
@@ -16,6 +17,7 @@
     <td>@claim.Issuer</td>
     <td>@claim.Type</td>
     <td>@claim.Value</td>
+
     <td>
         <form asp-action="Delete" method="post">
             <input type="hidden" name="claimValues"

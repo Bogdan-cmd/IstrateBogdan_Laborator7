@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using IstrateBogdan_Laborator2.Data;
 using IstrateBogdan_Laborator2.Models;
 using IstrateBogdan_Laborator2.Models.LibraryViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IstrateBogdan_Laborator2.Controllers
 {
+    [Authorize(Policy = "OnlySales")]
     public class PublishersController : Controller
     {
         private readonly LibraryContext _context;

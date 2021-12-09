@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using IstrateBogdan_Laborator2.Areas.Identity.Data;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
